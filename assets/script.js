@@ -3,14 +3,14 @@ var upperCases = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M
 var lowerCases = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z'];
 var symbols = ['!', "'", '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '{', '|', '}'];
 
-function userInput () {
-    userInput = [];
-    length = prompt("Please insert password length (Between 8 and 128 chacracters)");
+function userQuestions () {
+    var userInput = [];
+    var length = prompt("Please insert password length (Between 8 and 128 chacracters)");
     if (isNaN(length) || length < 8 || length > 128) {
         alert("Must have 8 to 128 characters!");
         return false;
     }
-3
+
     if (confirm ("The password will include lowercases?")) {
         userInput = userInput.concat(lowerCases);
     }
@@ -24,15 +24,21 @@ function userInput () {
     }
 
     if (confirm("The password will include special chracters?")) {
-        userInput = userInput.concat(symbols)
+        userInput = userInput.concat(symbols);
     } 
-    
-    else {
-        alert("You must choose at least one type or character!")
-    }
 
-    console.log(userInput);
-    return true;
+    if (userInput.length == 0) {
+        alert("You must select at leat one type of character");
+        return;
+    }
+    
+    var password = '';
+    for (var i = 0; i < length; i++ ){
+        var character = getRandomItem(userInput);
+        password += character;
+        }
+    //console.log(userInput);
+    return password;
 }
 
 function getRandomItem(array) {
@@ -41,14 +47,10 @@ function getRandomItem(array) {
 }
 
  function writePassword() {
-    var password = '';
-    for (var i = 0; i < length; i++ ){
-    var characters = getRandomItem(userInput);
-    password += characters;
-    }
+    var password = userQuestions();
        return document.querySelector("#password").textContent = password;
         
-     }
+    }
      
 
      var generateBtn = document.querySelector("#generate");
